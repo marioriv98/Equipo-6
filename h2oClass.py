@@ -29,9 +29,8 @@ class H2o:
         self.semU.acquire()
         # Seccion critica union
 
-        # time.sleep(.1)
         self.union('h')
-        #seccion critica union
+        # Seccion critica union
         self.semU.release()
 
         self.semHdisp.release()
@@ -78,36 +77,17 @@ class H2o:
     def union(self, x):
         time.sleep(.1)
         if x.upper() == 'H':
-            print("Hydrogen added".upper())
+            print("Hydrogen agregado".upper())
             self.hidrogeno -= 1
             self.temp += 1
         elif x.upper() == 'O':
-            print("oxygen added".upper())
+            print("oxygen agregado".upper())
             self.oxigeno -= 1
             self.temp += 1
         if self.temp == 3:
-            print("h2o created".upper())
+            print("h2o creado".upper())
             self.temp = 0
             self.h2o += 1
-            print(f"there are {self.h2o} H2o molecules ".upper())
-
-    # def h2o_wait(self):
-    #     for _ in range(0, 2*self.n):
-    #         self.h_threads[_].join()
-    #         if _ < self.n:
-    #             self.o_threads[_].join()
-    #     self.running = False
-    #
-    #     print(self.get_threads())
-    #     print(self.h_threads)
-    #     print(self.o_threads)
-    #
-    #     self.h_threads.clear()
-    #     self.o_threads.clear()
-    #     self.n = 0
-    #     print(self.h_threads)
-    #     print(self.o_threads)
-    #     print("H2O ENDED")
 
     def is_active(self):
         return self.running

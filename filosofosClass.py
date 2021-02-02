@@ -7,11 +7,7 @@ class Filosofos:
     def __init__(self):
         self.running = False
 
-        self.f1Comiendo = False
-        self.f2Comiendo = False
-        self.f3Comiendo = False
-        self.f4Comiendo = False
-        self.f5Comiendo = False
+        self.fComiendo = [False, False, False, False, False]
 
         self.semPal1 = threading.Semaphore(1)    # Semaforo de disponibles
         self.semPal2 = threading.Semaphore(1)    # Semaforo de disponibles
@@ -22,14 +18,16 @@ class Filosofos:
     # Deinicion del thread de Filosofo1
     def filosofo1_thread(self):
         while True:
+            time.sleep(.1)
             if not self.running:
                 return
             self.semPal1.acquire()
             self.semPal2.acquire()
             #Seccion Critica
-            self.f1Comiendo = True
-            print("comer")
-            self.f1Comiendo = False
+            self.fComiendo[0]= True
+            print("comer f1")
+            time.sleep(.5)
+            self.fComiendo[0] = False
             #Seccion Critica
             self.semPal1.release()
             self.semPal2.release()
@@ -37,14 +35,16 @@ class Filosofos:
     # Deinicion del thread de Filosofo2
     def filosofo2_thread(self):
         while True:
+            time.sleep(.1)
             if not self.running:
                 return
             self.semPal3.acquire()
             self.semPal2.acquire()
             # Seccion Critica
-            self.f2Comiendo = True
-            print("comer")
-            self.f2Comiendo = False
+            self.fComiendo[1] = True
+            print("comer f2")
+            time.sleep(.5)
+            self.fComiendo[1] = False
             # Seccion Critica
             self.semPal2.release()
             self.semPal3.release()
@@ -52,6 +52,7 @@ class Filosofos:
     # Deinicion del thread de Filosofo3
     def filosofo3_thread(self):
         while True:
+            time.sleep(.1)
             if not self.running:
                 return
             if not self.running:
@@ -59,9 +60,10 @@ class Filosofos:
             self.semPal3.acquire()
             self.semPal4.acquire()
             #Seccion Critica
-            self.f3Comiendo = True
-            print("comer")
-            self.f3Comiendo = False
+            self.fComiendo[2] = True
+            print("comer f3")
+            time.sleep(.5)
+            self.fComiendo[2] = False
             #Seccion Critica
             self.semPal3.release()
             self.semPal4.release()
@@ -69,14 +71,16 @@ class Filosofos:
     # Deinicion del thread de Filosofo4
     def filosofo4_thread(self):
         while True:
+            time.sleep(.1)
             if not self.running:
                 return
             self.semPal5.acquire()
             self.semPal4.acquire()
             #Seccion Critica
-            self.f4Comiendo = True
-            print("comer")
-            self.f4Comiendo = False
+            self.fComiendo[3] = True
+            print("comer f4")
+            time.sleep(.5)
+            self.fComiendo[3] = False
             #Seccion Critica
             self.semPal4.release()
             self.semPal5.release()
@@ -84,14 +88,16 @@ class Filosofos:
     # Deinicion del thread de Filosofo5
     def filosofo5_thread(self):
         while True:
+            time.sleep(.1)
             if not self.running:
                 return
             self.semPal5.acquire()
             self.semPal1.acquire()
             # Seccion Critica
-            self.f5Comiendo = True
-            print("comer")
-            self.f5Comiendo = False
+            self.fComiendo[4] = True
+            print("comer f5")
+            time.sleep(.5)
+            self.fComiendo[4] = False
             # Seccion Critica
             self.semPal5.release()
             self.semPal1.release()
@@ -107,11 +113,11 @@ class Filosofos:
         self.filosofo4 = threading.Thread(target=self.filosofo4_thread)
         self.filosofo5 = threading.Thread(target=self.filosofo5_thread)
         # Inicio de los 2 threads
+        self.filosofo5.start()
         self.filosofo1.start()
         self.filosofo2.start()
         self.filosofo3.start()
         self.filosofo4.start()
-        self.filosofo5.start()
 
     # Definicion de la rutina para que termine de correr el buffer
     def filosofos_stop(self):

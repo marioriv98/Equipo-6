@@ -37,7 +37,6 @@ class Buffer:
             self.semUti.acquire()
             self.semUti.acquire()
             self.full = True
-
             # Inicia seccion critica para consumir
             time.sleep(.1)
             print("Consume")
@@ -48,6 +47,7 @@ class Buffer:
             self.full = False
             self.cons = False
             self.semDis.release(2)
+
             if not self.running:
                 return
 
@@ -63,6 +63,7 @@ class Buffer:
         self.producer.start()
 
     # Definicion de la rutina para que termine de correr el buffer
+
     def buffer_stop(self):
         self.running = False
 
