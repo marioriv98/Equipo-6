@@ -109,9 +109,6 @@ class MyWindow(QMainWindow):
         self.lb_threads.move(200, 270)
         self.lb_threads.setText(f"Threads: {Buffer.get_threads()}")
 
-    def bt_pause_clicked(self):
-        self.buffer.buffer_pause()
-
     def thread_refresh(self):
         while self.win_active:
             self.refresh()
@@ -192,4 +189,3 @@ def window():
 print("Main program".upper())
 
 window()
-
